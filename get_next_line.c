@@ -6,7 +6,7 @@
 /*   By: dkhatri <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 16:13:26 by dkhatri           #+#    #+#             */
-/*   Updated: 2018/12/06 18:33:15 by dkhatri          ###   ########.fr       */
+/*   Updated: 2018/12/06 19:45:35 by dkhatri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static t_list	*ft_lstpluck(t_list **alst, const int fd)
 			ptr1->next = ptr->next;
 			return (ptr);
 		}
+		ptr1 = ptr;
 		ptr = ptr->next;
 	}
 	return (0);
@@ -48,6 +49,7 @@ static int		ft_lst(t_list **alst, t_list **ele, const int fd, char *str)
 		return (1);
 	}
 	(*ele)->content_size = 0;
+	(*ele)->next = 0;
 	free((*ele));
 	*ele = 0;
 	return (1);
@@ -127,6 +129,7 @@ int				get_next_line(const int fd, char **line)
 	if (result == 0)
 		return (0);
 	if (result == 2)
-		ft_lst(&head, &ele, fd, extra);
+		if (!(ft_lst(&head, &ele, fd, extra)))
+			return (-1);
 	return (1);
 }
